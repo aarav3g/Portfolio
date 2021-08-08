@@ -14,9 +14,9 @@ player_names = []
 
 #This function manages all of the game’s actions 
 
-	def user_guess_capitals (num_questions, num_players, num_attempts): 
+def user_guess_capitals (num_questions, num_players, num_attempts): 
 
-	#This displays the game’s instructions 
+#This displays the game’s instructions 
 
   print “Welcome to Random Capital Quest, where your fate is based on your luck. \nWe will begin with 	practice question, \nduring which you will be asked to state the capital of the randomly selected country. \nChoose an order amongst yourselves, and when the first person has finished their questions, \nthe next one will enter and their name, answer the questions and so forth. \nAfter the practice rounds, a message will state that the actual round has begun and will explain how it works. \nGood luck!” 
 
