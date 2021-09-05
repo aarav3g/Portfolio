@@ -1,4 +1,4 @@
-public class WebsiteTester
+public class WebsiteGenerator
 {
     public static void main(String[] args)
     {
