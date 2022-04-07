@@ -14,7 +14,3 @@ plt.xlabel("Time (years from 2020)")
 plt.ylabel("Amount of rainfall (inches)")
 plt.show()
 
-
-avg_rainfall = float(input("Enter the average annual rainfall: "))
-predicted_avg_rainfall = (avg_rainfall * 1.0036)
-print ("The predicted average annual rainfall is " + str(predicted_avg_rainfall))
