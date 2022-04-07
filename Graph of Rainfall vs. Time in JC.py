@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 plt.rcParams.update({'figure.figsize':(9,5), 'figure.dpi':90})
 x = np.arange(0, 30, 1)
-y = (x * 1.0036) + 53.7
+y = (x * (x * 1.0036)) + 53.7
 
 
 
