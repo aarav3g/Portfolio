@@ -1,4 +1,4 @@
-Days CO	Days NO2	Days Ozone	Days PM2.5	Year
+Days CO,Days NO2,Days Ozone,Days PM2.5,Year
 0,11,94,260,2021
 0,24,82,260,2020
 0,19,130,216,2019
