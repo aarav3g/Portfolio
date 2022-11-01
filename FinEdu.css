@@ -1,0 +1,41 @@
+body{
+    background-color: rgba(99, 183, 224);
+}
+
+h1{
+    font-family: sans-serif;
+    color: aliceblue;
+    font-size: 350%;
+}
+h3{
+    font-family: sans-serif;
+    color: aliceblue;
+}
+
+nav{
+    text-align: center;
+    float: right;
+    width: 25%;
+    height: 3000 px;
+    background-color: rgb(80, 147, 180);
+
+}
+
+button{
+    background-color: rgb(80, 147, 180);
+    color: aliceblue;
+    border: 0cm;
+    
+}
+.center {
+    padding: 300px ;
+    border: 10px;
+    text-align: center;
+  }
+
+@media (max-width: 600px) {
+    nav, article {
+      width: 100%;
+      height: auto;
+    }
+}
