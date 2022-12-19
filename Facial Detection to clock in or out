@@ -1,0 +1,90 @@
+import pathlib, cv2, ssl, smtplib, imghdr
+from email.message import EmailMessage
+from password import password
+from datetime import datetime
+
+#Gets the date and time to add to the email when an employee clocks in or out
+date = datetime.now()
+body_day = str(date.month) + "/" + str(date.day) + "/" + str(date.year)
+if date.hour > 12:
+    body_time = str(date.hour - 12) + ":" + str(date.minute) + ":" + str(date.second)
+else:
+    body_time = str(date.hour) + ":" + str(date.minute) + ":" + str(date.second)
+
+#Enter email sender's email address
+email_sender = ''
+#Use email password from password file
+email_pass = password
+#Enter email receiver's email address
+email_receiver = ''
+
+#Creates and calls facial detection model in the OpenCV library
+cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / "data/haarcascade_frontalface_default.xml"
+clf = cv2.CascadeClassifier(str(cascade_path))
+
+#Uses the webcam for facial detection
+camera = cv2.VideoCapture(0)
+
+#Infinite loop that ensures the facial detection is always running, only stops when "q" is pressed
+while True:
+    _, frame = camera.read()
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = clf.detectMultiScale(
+        gray,
+        scaleFactor = 1.1,
+        minNeighbors = 7,
+        minSize = (30,30),
+        flags = cv2.CASCADE_SCALE_IMAGE
+    )
+    #Creates turquoise boxes around each face in the webcam image
+    for (x, y, width, height) in faces:
+        cv2.rectangle(frame, (x, y), (x+width, y+width), (255, 255, 0), 2)
+
+    #Displays the boxes around the faces
+    cv2.imshow("Faces", frame)
+    #If "q" is pressed, the program quits running
+    if cv2.waitKey(1) == ord("q"):
+        break
+    #If "i" is pressed, the program formats and sends an email to say an employee has clocked in with an image of the employee and the time
+    if cv2.waitKey(1) == ord("i"):
+        img = cv2.imwrite('/Users/aaravgupta/Downloads/Facial Recognition project/newimage.png', cv2)
+        status = cv2.imwrite('/Users/aaravgupta/Downloads/Facial Recognition project/newimage.png',img)
+        print(status)
+        subject1 = "New Clock-In" 
+        #if clocking in/out, change body
+        #then add to body_datetime
+        body = 'This employee clocked in on ' + body_day + " at " + body_time
+        em = EmailMessage()
+        em['From'] = email_sender
+        em['To'] = email_receiver
+        context = ssl.create_default_context()
+        em['subject'] = subject1
+        em.set_content(body)
+        
+        #Creates SMTP server connection, change first and second parameters if the email client is not gmail        
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(email_sender, email_pass)
+            smtp.sendmail(email_sender, email_receiver, em.as_string())
+
+    #If "o" is pressed, the program formats and sends an email to say an employee has clocked out with an image of the employee and the time    
+    if cv2.waitKey(1) == ord("o"):
+        subject2 = "New Clock-Out" 
+        #if clocking in/out, change body
+        #then add to body_datetime
+        body = 'This employee clocked out on ' + body_day + " at " + body_time
+        em = EmailMessage()
+        em['From'] = email_sender
+        em['To'] = email_receiver
+        context = ssl.create_default_context()
+        em['subject'] = subject2
+        em.set_content(body)
+        
+        #Creates SMTP server connection, change first and second parameters if the email client is not gmail
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(email_sender, email_pass)
+            smtp.sendmail(email_sender, email_receiver, em.as_string())
+
+#Quits the program
+camera.release()
+cv2.destroyAllWindows()
+
